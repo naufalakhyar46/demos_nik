@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/css/font-awesome.min.css">
+
+    <title>Demo Data Nik </title>
+
+</head>
+<body>
+
+<div class="container" style="margin-top: 50px;">
+
+    <h4 class="text-center">Demo sampel data NIK </h4><br>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="text-center">Tabel Data</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered"> 
+                            <thead align="center">
+                                <tr>
+                                    <th>Nik</th>
+                                    <th>Nama</th>
+                                    <th>Jenis Kelamin</th>
+                                    <th>Tanggal Lahir</th>
+                                </tr>
+                            </thead>
+                            <tbody id="isi_table" align="center">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6" id="card_nik">
+                    <h5 class="text-center">Silahkan isikan data NIK</h5>
+                        <div align="center">
+                            <input type="number" min="0" oninput="angka(this)" style="max-width: 300px;text-align: center" name="nik" id="nik" placeholder="Isikan NIK" class="form-control">
+                            <br>
+                            <div id="error-data" class="alert alert-danger">Data tidak ditemukan. <button type="button" class="close" onclick="tutup()"><i class="fa fa-close"></i></button></div>
+                            <br> 
+                            <button type="button" class="btn btn-sm btn-success" onclick="cek()"><i class="fa fa-search"></i> Cari</button>
+                        </div>
+                </div>
+                <div class="col-md-6" id="card_hasil">
+                    <div class="card-body">
+                        <h5 class="text-center nomor_nik"></h5>
+                        <div align="center">
+                            <div class="form-group">
+                                <label>Nama</label>
+                                <input type="text" style="max-width: 300px;text-align: center" id="nama" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Jenis Kelamin</label>
+                                <input type="text" style="max-width: 300px;text-align: center" id="jk" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Tanggal Lahir</label>
+                                <input type="text" style="max-width: 300px;text-align: center" id="tl" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-sm btn-primary" onclick="kembali()"><i class="fa fa-arrow-left"></i> Kembali</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="assets/js/jquery-3.1.0.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+const data = [
+    {
+        nik  : '1234',
+        nama : 'Naufal',
+        jk   : 'Laki-laki',
+        tl   : '28-12-1996',
+    },
+    {
+        nik  : '2341',
+        nama : 'Bayu',
+        jk   : 'Laki-laki',
+        tl   : '15-01-1996',
+    },
+    {
+        nik  : '3412',
+        nama : 'Mira',
+        jk   : 'Perempuan',
+        tl   : '19-07-1997',
+    },
+    {
+        nik  : '4123',
+        nama : 'Suci',
+        jk   : 'Perempuan',
+        tl   : '12-06-1998',
+    },
+
+];
+
+$(document).ready(function(){
+    $.map(data, function(i){
+        $('#isi_table').append('<tr>\
+            <td>'+i.nik+'</td>\
+            <td>'+i.nama+'</td>\
+            <td>'+i.jk+'</td>\
+            <td>'+i.tl+'</td>\
+            </tr>')
+    })
+})
+
+function cek(){
+    var nik = $('#nik').val();
+    const filter = data.filter(i => i.nik === nik);
+    if(filter.length > 0){
+        cari(filter)
+    }else{
+        gagal()
+    }
+}
+
+$('#card_hasil').hide();
+$('#error-data').hide();
+
+function cari(items){
+    $.map(items, function(i){
+        $('#nama').val(i.nama);
+        $('#jk').val(i.jk);
+        $('#tl').val(i.tl);
+    })
+        $('#card_nik').hide();
+        $('#card_hasil').show();
+        $('#error-data').hide();
+}
+function gagal(){
+    $('#error-data').show();
+}
+function kembali(){
+$('#card_hasil').hide();
+$('#card_nik').show();
+$('#error-data').hide();
+}
+
+function tutup(){
+    $('#error-data').hide();
+}
+</script>
+
+ <script>
+    function angka(nilai){
+        if (nilai.value.length > 4)
+      nilai.value = nilai.value.slice(0, 4)
+    }
+ </script>
+
+</body>
+</html>
